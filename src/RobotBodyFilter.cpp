@@ -606,11 +606,11 @@ bool RobotBodyFilterPointCloud2::update(const sensor_msgs::PointCloud2 &inputClo
     return false;
   }
 
-  /*if (!this->tfFramesWatchdog->isReachable(this->sensorFrame))
+  if (!this->tfFramesWatchdog->isReachable(this->sensorFrame))
   {
     ROS_DEBUG("RobotBodyFilter: Throwing away scan since sensor frame is unreachable.");
     return false;
-  }*/
+  }
 
   if (this->requireAllFramesReachable && !this->tfFramesWatchdog->areAllFramesReachable())
   {
