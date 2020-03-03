@@ -32,14 +32,14 @@ protected:
     T value;
     if (filters::FilterBase<F>::getParam(name, value))
     {
-      ROS_INFO_STREAM(this->getName() << ": Found parameter: " << name <<
+      ROS_DEBUG_STREAM(this->getName() << ": Found parameter: " << name <<
         ", value: " << to_string(value) <<
         prependIfNonEmpty(unit, " "));
       return value;
     }
     else
     {
-      ROS_WARN_STREAM(this->getName() << ": Cannot find value for parameter: "
+      ROS_DEBUG_STREAM(this->getName() << ": Cannot find value for parameter: "
         << name << ", assigning default: " << to_string(defaultValue)
         << prependIfNonEmpty(unit, " "));
     }
