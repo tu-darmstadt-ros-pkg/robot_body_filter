@@ -31,6 +31,8 @@ public:
                    ros::Duration unreachableTfLookupTimeout = ros::Duration(0, 100000000),  // 0.1 sec
                    ros::Rate unreachableFramesCheckRate = ros::Rate(1.0));
 
+  virtual ~TFFramesWatchdog();
+
   /** Start the updater using a thread.
    */
   void start();
@@ -38,6 +40,12 @@ public:
   /** Run the updater (should be run in a separate thread).
    */
   void run();
+
+  /**
+   * \brief Return true if the watchdog is running.
+   * \return Whether the watchdog is running or not.
+   */
+  bool isRunning() const;
 
   /**
    * \brief Pause thread execution.
@@ -64,6 +72,20 @@ public:
    * \param monitored_frames Set of frames to be monitored.
    */
   void setMonitoredFrames(std::set<std::string> monitoredFrames);
+
+  /**
+   * \brief Add the given frame to the set of monitored frames (if it is not
+   * already there).
+   * \param monitoredFrame Name of the frame.
+   */
+  void addMonitoredFrame(const std::string& monitoredFrame);
+
+  /**
+   * \brief Return whether the given frame is monitored by this watchdog.
+   * \param frame TF frame.
+   * \return Whether the frame is monitored.
+   */
+  bool isMonitored(const std::string& frame) const;
 
   /**
    * \brief Return whether the given frame is reachable.
@@ -106,6 +128,22 @@ protected:
    * \note The caller has to hold a lock to framesMutex.
    */
   bool isReachableNoLock(const std::string& frame) const;
+
+  /**
+   * \brief Return whether the given frame is monitored by this watchdog.
+   * \param frame TF frame.
+   * \return Whether the frame is monitored.
+   * \note The caller has to hold a lock to framesMutex.
+   */
+  bool isMonitoredNoLock(const std::string& frame) const;
+
+  /**
+   * \brief Add the given frame to the set of monitored frames (if it is not
+   * already there).
+   * \param monitoredFrame Name of the frame.
+   * \note The caller has to hold a lock to framesMutex.
+   */
+  void addMonitoredFrameNoLock(const std::string& monitoredFrame);
 
   /**
    * \brief Mark the given frame as reachable.
