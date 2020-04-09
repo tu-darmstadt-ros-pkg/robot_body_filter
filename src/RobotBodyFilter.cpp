@@ -240,7 +240,6 @@ bool RobotBodyFilter<T>::configure() {
     std::set<std::string> monitoredFrames;
     for (const auto& shapeToLink : this->shapesToLinks)
       monitoredFrames.insert(shapeToLink.second.link->name);
-    monitoredFrames.insert(this->sensorFrame);
 
     this->tfFramesWatchdog = std::make_shared<TFFramesWatchdog>(this->filteringFrame,
         monitoredFrames, this->tfBuffer, this->unreachableTransformTimeout,
