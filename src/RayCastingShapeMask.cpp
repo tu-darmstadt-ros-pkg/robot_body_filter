@@ -197,6 +197,11 @@ void RayCastingShapeMask::classifyPointNoLock(const Eigen::Vector3d& data,
 {
   mask = MaskValue::OUTSIDE;
 
+  if(data.hasNaN()) {
+    mask = MaskValue::INVALID;
+    return;
+  }
+
   // direction from measured point to sensor
   Eigen::Vector3d dir(sensorPos - data);
   const auto distance = dir.norm();

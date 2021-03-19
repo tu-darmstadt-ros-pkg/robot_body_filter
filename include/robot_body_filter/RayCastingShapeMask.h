@@ -54,6 +54,7 @@ public:
     OUTSIDE = 1, //!< The point is outside robot body and is not a shadow.
     CLIP = 2, //!< The point is outside measurement range.
     SHADOW = 3, //!< Line segment sensor-point intersects the robot body and the point is not INSIDE.
+    INVALID = 4, //!< The cannot be processed regularly, e.g. containing NaN values.
   };
 
   /**
